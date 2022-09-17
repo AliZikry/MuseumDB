@@ -1,0 +1,138 @@
+#==============================================================
+# DBMS name:      Microsoft Access 2007
+# Created on:     3/12/2021 9:06:00 PM
+#==============================================================
+
+
+RemoveJoin C=FK_ANTIQUIT_CONTAINS_MUSEUM T=ANTIQUITIES P=MUSEUM;
+
+RemoveJoin C=FK_BEHOLDS_BEHOLDS_MUMMYS T=BEHOLDS P=MUMMYS;
+
+RemoveJoin C=FK_BEHOLDS_BEHOLDS2_ANTIQUIT T=BEHOLDS P=ANTIQUITIES;
+
+RemoveJoin C=FK_INCLUDES_INCLUDES_PAPYRUS T=INCLUDES P=PAPYRUS;
+
+RemoveJoin C=FK_INCLUDES_INCLUDES2_ANTIQUIT T=INCLUDES P=ANTIQUITIES;
+
+RemoveJoin C=FK_MUSEUM_M_HAS_MUSEUM T=MUSEUM_MANAGERS P=MUSEUM;
+
+RemoveTble C=ANTIQUITIES;
+
+RemoveTble C=BEHOLDS;
+
+RemoveTble C=INCLUDES;
+
+RemoveTble C=MUMMYS;
+
+RemoveTble C=MUSEUM;
+
+RemoveTble C=MUSEUM_MANAGERS;
+
+RemoveTble C=PAPYRUS;
+
+#==============================================================
+# Table: ANTIQUITIES
+#==============================================================
+CreateTble C=ANTIQUITIES N="Antiquities"
+(
+   C=ANTIQUITYID T="COUNTER" P=Yes M=Yes N="AntiquityID" Z=false,
+   C=MUSEUMID T="INTEGER" P=No M=No N="MuseumID" Z=false,
+   C=ANTIQUITYAGE T="FLOAT" P=No M=Yes N="AntiquityAge" Z=false,
+   C=ANTIQUITYSIZE T="NUMBER" P=No M=Yes N="AntiquitySize" Z=false,
+   C=ANTIQUITYOWNER T="VARCHAR(255)" P=No M=Yes N="AntiquityOwner" Z=false
+);
+
+#==============================================================
+# Table: BEHOLDS
+#==============================================================
+CreateTble C=BEHOLDS N="beholds"
+(
+   C=MUMMYID T="INTEGER" P=Yes M=Yes N="MummyID" Z=false,
+   C=ANTIQUITYID T="INTEGER" P=Yes M=Yes N="AntiquityID" Z=false
+);
+
+#==============================================================
+# Table: INCLUDES
+#==============================================================
+CreateTble C=INCLUDES N="includes"
+(
+   C=PAPYRUSID T="INTEGER" P=Yes M=Yes N="PapyrusID" Z=false,
+   C=ANTIQUITYID T="INTEGER" P=Yes M=Yes N="AntiquityID" Z=false
+);
+
+#==============================================================
+# Table: MUMMYS
+#==============================================================
+CreateTble C=MUMMYS N="Mummys"
+(
+   C=MUMMYID T="COUNTER" P=Yes M=Yes N="MummyID" Z=false,
+   C=MUMMYTYPE T="VARCHAR(255)" P=No M=Yes N="MummyType" Z=false,
+   C=MUMMYGENDER T="VARCHAR(200)" P=No M=Yes N="MummyGender" Z=false,
+   C=MUMMYOWNER T="VARCHAR(255)" P=No M=Yes N="MummyOwner" Z=false,
+   C=MUMMYAGE T="INTEGER" P=No M=Yes N="MummyAge" Z=false
+);
+
+#==============================================================
+# Table: MUSEUM
+#==============================================================
+CreateTble C=MUSEUM N="Museum"
+(
+   C=MUSEUMID T="COUNTER" P=Yes M=Yes N="MuseumID" Z=false,
+   C=MUSEUMNAME T="VARCHAR(255)" P=No M=Yes N="MuseumName" Z=false,
+   C=MUSEUMDATEOFESTABLISHMENT T="DATE" P=No M=Yes N="MuseumDateOfEstablishment" Z=false,
+   C=MUSEUMADDRESS T="NOTE" P=No M=Yes N="MuseumAddress" Z=false
+);
+
+#==============================================================
+# Table: MUSEUM_MANAGERS
+#==============================================================
+CreateTble C=MUSEUM_MANAGERS N="Museum Managers"
+(
+   C=MANAGERID T="COUNTER" P=Yes M=Yes N="ManagerID" Z=false,
+   C=MUSEUMID T="INTEGER" P=No M=No N="MuseumID" Z=false,
+   C=FIRSTNAME T="VARCHAR(255)" P=No M=Yes N="FirstName" Z=false,
+   C=LASTNAME T="VARCHAR(255)" P=No M=Yes N="LastName" Z=false,
+   C=DATEOFBIRH T="DATE" P=No M=Yes N="DateOfBirh" Z=false
+);
+
+#==============================================================
+# Table: PAPYRUS
+#==============================================================
+CreateTble C=PAPYRUS N="Papyrus"
+(
+   C=PAPYRUSID T="COUNTER" P=Yes M=Yes N="PapyrusID" Z=false,
+   C=PAPYRUSNAME T="VARCHAR(255)" P=No M=Yes N="PapyrusName" Z=false,
+   C=PAPYRUSAGE T="INTEGER" P=No M=Yes N="PapyrusAge" Z=false,
+   C=PAPYRUSOWNER T="VARCHAR(300)" P=No M=Yes N="PapyrusOwner" Z=false
+);
+
+CreateJoin C=FK_ANTIQUIT_CONTAINS_MUSEUM T=ANTIQUITIES P=MUSEUM D=restrict U=restrict
+(
+      P=MUSEUMID F=MUSEUMID
+);
+
+CreateJoin C=FK_BEHOLDS_BEHOLDS_MUMMYS T=BEHOLDS P=MUMMYS D=restrict U=restrict
+(
+      P=MUMMYID F=MUMMYID
+);
+
+CreateJoin C=FK_BEHOLDS_BEHOLDS2_ANTIQUIT T=BEHOLDS P=ANTIQUITIES D=restrict U=restrict
+(
+      P=ANTIQUITYID F=ANTIQUITYID
+);
+
+CreateJoin C=FK_INCLUDES_INCLUDES_PAPYRUS T=INCLUDES P=PAPYRUS D=restrict U=restrict
+(
+      P=PAPYRUSID F=PAPYRUSID
+);
+
+CreateJoin C=FK_INCLUDES_INCLUDES2_ANTIQUIT T=INCLUDES P=ANTIQUITIES D=restrict U=restrict
+(
+      P=ANTIQUITYID F=ANTIQUITYID
+);
+
+CreateJoin C=FK_MUSEUM_M_HAS_MUSEUM T=MUSEUM_MANAGERS P=MUSEUM D=restrict U=restrict
+(
+      P=MUSEUMID F=MUSEUMID
+);
+
